@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<AuthorizeView>
+
+    <Authorized>
+        <MudLink Href="authentication/profile" @onclick="BeginSignOut">
+            Hello, @context.User.Identity.Name!
+        </MudLink>
+
+        <MudTooltip Text="Sign Out">
+            <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Warning" @onclick="BeginSignOut" />
+        </MudTooltip>
+    </Authorized>
+
+    <NotAuthorized>
+        <MudTooltip Text="Register">
+            <MudIconButton Icon="@Icons.Material.Filled.AppRegistration" Color="Color.Warning" @onclick="DirectToRegister" />
+        </MudTooltip>
+
+        <MudTooltip Text="Login">
+            <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Warning" @onclick="DirectToLoginPage" />
+        </MudTooltip>
+
+    </NotAuthorized>
+
+</AuthorizeView>
+
+@code{
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
+    }
+
+    private void DirectToLoginPage()
+    {
+        Navigation.NavigateTo("authentication/login");
+    }
+
+    private void DirectToRegister()
+    {
+        Navigation.NavigateTo("authentication/register");
+    }
+}

@@ -2,98 +2,125 @@
 @using System.ComponentModel.DataAnnotations
 
 <MudContainer>
-    <MudText Typo="Typo.h5">Add | Edit Patient</MudText>
+    
 	<MudSpacer/>
 
     <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Add / edit patient</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
         <MudCardContent>
                 <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
 
-                    @*patient type selector*@
-                    <MudChipSet @bind-SelectedChip="SelectedPatientType" Filter="true" Mandatory="@mandatory">
-                        <MudChip Text="Local" Color="Color.Primary">Local</MudChip>
-                        <MudChip Text="Tourist" Color="Color.Secondary">Tourist</MudChip>
-                        <MudChip Text="permit holder" Color="Color.Info">Workpermit Holder</MudChip>
-                    </MudChipSet>
+                    @*row 1*@
+                    <MudGrid>
+                        @*patient type selector*@
+                        <MudChipSet @bind-SelectedChip="SelectedPatientType" Filter="true" Mandatory="@mandatory">
+                            <MudChip Text="Local" Color="Color.Primary">Local</MudChip>
+                            <MudChip Text="Tourist" Color="Color.Primary">Tourist</MudChip>
+                            <MudChip Text="permit holder" Color="Color.Primary">Workpermit Holder</MudChip>
+                        </MudChipSet>
+                    </MudGrid>
 
-                    @*National ID*@
-                    <MudItem xs="12" sm="6" md="3">
-                        <MudTextField @bind-Value="NidPp" Label="National ID or Passport Number"  
-                        Variant="Variant.Text" />
-                    </MudItem>
+                    @*Row 2*@
+                    <MudGrid>
+                        @*National ID*@
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudTextField @bind-Value="NidPp" Label="National ID or Passport Number"  
+                            Variant="Variant.Text" />
+                        </MudItem>
 
-                    @*Patient name*@
-                    <MudItem xs="12" sm="6" md="3">
-                        <MudTextField @bind-Value="Fullname" Label="Fullname"
-                        Variant="Variant.Text" />
-                    </MudItem>
+                        @*Patient name*@
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudTextField @bind-Value="Fullname" Label="Fullname"
+                            Variant="Variant.Text" />
+                        </MudItem>
 
-                    @*Gender: get this from database later*@
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudSelect T="string" Label="Select patient gender" @bind-Value="SelectedGender">
-                            <MudSelectItem Value="@("Male")" />
-                            <MudSelectItem Value="@("Female")" />
-                            <MudSelectItem Value="@("Unspecified")" />
-                            <MudSelectItem Value="@("Other")" />
-                        </MudSelect>
-                    </MudItem>
+                        @*Gender: get this from database later*@
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudSelect T="string" Label="Select patient gender" @bind-Value="SelectedGender">
+                                <MudSelectItem Value="@("Male")" />
+                                <MudSelectItem Value="@("Female")" />
+                                <MudSelectItem Value="@("Unspecified")" />
+                                <MudSelectItem Value="@("Other")" />
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
 
-                    @*Birthdate selector*@
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudDatePicker Label="Birthdate" Rounded=true
-                        @bind-Date="Birthdate" DisableToolbar="true"/>
-                    </MudItem>
+                    @*Row 3*@
+                    <MudGrid>
+                        @*Birthdate selector*@
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudDatePicker Label="Birthdate" Rounded=true
+                            @bind-Date="Birthdate" DisableToolbar="true"/>
+                        </MudItem>
 
-                    @*Nationalities selector*@
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudAutocomplete T="string" Label="Nationality" @bind-Value="PatientNationality" SearchFunc="@NationalityLookup"
-                                         ResetValueOnEmptyText=true
-                                         CoerceValue=false />
-                    </MudItem>
+                        @*Nationalities selector*@
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudAutocomplete T="string" Label="Nationality" @bind-Value="PatientNationality"
+                                             SearchFunc="@NationalityLookup"
+                                             ResetValueOnEmptyText=true
+                                             CoerceValue=false />
+                        </MudItem>
+                    </MudGrid>
 
-                    @*select sample collected date and time*@
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudDatePicker Label="Sample collected date" DisableToolbar="true" Rounded=true
-                        @bind-Date="SampleCollectedDate" DateFormat="yyyy-MM-dd" />
-                    </MudItem>
-                    <MudItem xs="12" sm="6" md="4">
-                        <MudTimePicker Label="Sample collected time" 
-                        Rounded=true @bind-Date="SampleCollectedTime" TimeFormat="HH:mm" />
-                    </MudItem>
+                    @*Row 4*@
+                    <MudGrid>
+                        @*select sample collected date and time*@
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudDatePicker Label="Sample collected date" DisableToolbar="true" Rounded=true
+                            @bind-Date="SampleCollectedDate" DateFormat="yyyy-MM-dd" />
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudTimePicker Label="Sample collected time" 
+                            Rounded=true @bind-Date="SampleCollectedTime" TimeFormat="HH:mm" />
+                        </MudItem>
+                    </MudGrid>
 
-                    <br/>
-                    @*File upload for uploading NId,pp,visa*@
-                    <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple accept=".jpg, .jpeg, .pdf"/>
+                    @*Row 6*@
+                    <MudGrid>
 
-                    <MudButton HtmlTag="label"
-                               Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Filled.CloudUpload"
-                               for="fileInput">
-                        Upload Passport / National ID / Work Visa
-                    </MudButton>
+                        @*File upload for uploading NId,pp,visa*@
+                        <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple accept=".jpg, .jpeg, .pdf"/>
+
+                        <MudButton  Class="ma-4" HtmlTag="label"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Filled.CloudUpload"
+                                   for="fileInput">
+                            Upload Passport / National ID / Work Visa
+                        </MudButton>
+
+                        @*Edit Address button*@
+                        <MudButton  Class="ma-4"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary">
+                                   Edit Address
+                         </MudButton>
+                    </MudGrid>
 
                 </MudForm>
-            </MudCardContent>
-            <MudCardActions>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" 
-            Class="ml-auto">Save</MudButton>
+        </MudCardContent>
+        <MudCardActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" 
+                Class="ml-auto">Save</MudButton>
         </MudCardActions>
     </MudCard>
 
 
-
-@if (files != null)
-{
-    <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
-    <MudList>
-    @foreach (var file in files)
+    @if (files != null)
     {
-     <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
-         @file.Name <code>@file.Size bytes</code>
-     </MudListItem>
+        <MudText Typo="@Typo.h6">@files.Count() Selected File@(files.Count() == 1 ? "" : "s"):</MudText>
+        <MudList>
+        @foreach (var file in files)
+        {
+             <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
+                 @file.Name <code>@file.Size bytes</code>
+             </MudListItem>
+        }
+        </MudList>
     }
-    </MudList>
-}
 
 </MudContainer>

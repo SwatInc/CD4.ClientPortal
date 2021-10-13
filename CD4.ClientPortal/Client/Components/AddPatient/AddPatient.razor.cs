@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CD4.ClientPortal.Client.Pages.AddPatient
+namespace CD4.ClientPortal.Client.Components.AddPatient
 {
     public partial class AddPatient
     {

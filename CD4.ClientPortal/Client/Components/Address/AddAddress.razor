@@ -1,0 +1,59 @@
+﻿@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+
+<MudContainer>
+    
+	<MudSpacer/>
+
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Patient Address</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+                <MudForm @ref="_form" @bind-IsValid="@_success" @bind-Errors="@_errors">
+
+                    @*row 1*@
+                    <MudGrid>
+                        @*Address*@
+                        <MudItem xs="12" sm="6" md="3">
+                            <MudTextField @bind-Value="_address" 
+                                Label="Patient Address"  
+                            Variant="Variant.Text" />
+                        </MudItem>
+                    </MudGrid>
+
+                    <MudGrid>
+                        @*Atoll*@
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudSelect T="string" Label="Select patient atoll" @bind-Value="SelectedAtoll">
+
+                                <Iterations Items=DistinctAtolls Context = "atoll">
+                                    <MudSelectItem Value="@(atoll)" />
+                                </Iterations>
+
+                            </MudSelect>
+                        </MudItem>
+
+                        @*Island*@
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudSelect T="string" Label="Select patient island" @bind-Value="_selectedIsland">
+
+                                <Iterations Items=FilteredIslands Context = "island">
+                                    <MudSelectItem Value="@(island)" />
+                                </Iterations>
+
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
+
+                </MudForm>
+        </MudCardContent>
+        <MudCardActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" 
+                Class="ml-auto">Save</MudButton>
+        </MudCardActions>
+    </MudCard>
+
+</MudContainer>

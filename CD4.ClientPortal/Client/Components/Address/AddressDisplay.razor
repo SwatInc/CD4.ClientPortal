@@ -1,0 +1,10 @@
+﻿<MudContainer>
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudField Label="Patient Address" Variant="Variant.Outlined">
+                @Address
+                @String.Concat(new string[]{LoggedInSiteAddress.Atoll,". ", LoggedInSiteAddress.Island})
+            </MudField>
+        </MudItem>
+    </MudGrid>
+</MudContainer>

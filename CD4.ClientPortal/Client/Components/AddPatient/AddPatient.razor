@@ -1,5 +1,6 @@
 ﻿@using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
+@using CD4.ClientPortal.Client.Components.Address
 
 <MudContainer>
     
@@ -12,7 +13,7 @@
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-                <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                <MudForm @ref="_form" @bind-IsValid="@_success" @bind-Errors="@errors">
 
                     @*row 1*@
                     <MudGrid>
@@ -93,22 +94,39 @@
                             Upload Passport / National ID / Work Visa
                         </MudButton>
 
-                        @*Edit Address button*@
-                        <MudButton  Class="ma-4"
-                                   Variant="Variant.Filled"
-                                   Color="Color.Primary">
-                                   Edit Address
-                         </MudButton>
+                        <Condition Evaluation=@_isDisplayAddressVisible >
+                            <Match>
+                                @*Edit Address button*@
+                                <MudButton  Class="ma-4"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Primary" OnClick="EnableAddressEditing">
+                                           Edit Address
+                                 </MudButton>
+                            </Match>
+                        </Condition>
+
                     </MudGrid>
 
                 </MudForm>
         </MudCardContent>
         <MudCardActions>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" 
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" 
                 Class="ml-auto">Save</MudButton>
         </MudCardActions>
     </MudCard>
-
+  
+    <Condition Evaluation=@_isDisplayAddressVisible>
+        <Match>
+            <div class="ma-4">
+                <AddressDisplay/>
+            </div>
+        </Match>
+        <NotMatch>
+            <div class="ma-4">
+                <AddAddress/>
+            </div>
+        </NotMatch>
+    </Condition>
 
     @if (files != null)
     {

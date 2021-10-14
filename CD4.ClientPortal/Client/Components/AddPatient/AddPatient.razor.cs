@@ -16,6 +16,14 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
         private string _patientNationality;
         private DateTime? _sampleCollectedDate;
         private DateTime? _sampleCollectedTime;
+        private bool _isDisplayAddressVisible;
+        bool _success;
+        MudForm _form;
+
+        public AddPatient()
+        {
+            _isDisplayAddressVisible = true;
+        }
 
         private DateTime? _birthdate;
 
@@ -35,13 +43,11 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
             set { _selectedGender = value; Console.WriteLine($"Gender: {_selectedGender}"); }
         }
 
-
         public string PatientNationality
         {
             get { return _patientNationality; }
             set { _patientNationality = value; }
         }
-
 
         public DateTime? Birthdate
         {
@@ -78,10 +84,7 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
             set { _fullname = value; Console.WriteLine($"Fullname: {_fullname}"); }
         }
 
-
-        bool success;
         string[] errors = Array.Empty<string>();
-        MudForm form;
 
         private async Task<IEnumerable<string>> NationalityLookup(string value)
         {
@@ -102,6 +105,10 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
             }
             Console.WriteLine($"Number of files: {files.Count}");
             //TODO upload the files to the server
+        }
+        private void EnableAddressEditing()
+        {
+            _isDisplayAddressVisible = false;
         }
     }
 

@@ -18,7 +18,7 @@
                     <MudGrid>
                         @*Address*@
                         <MudItem xs="12" sm="6" md="3">
-                            <MudTextField @bind-Value="_address" 
+                            <MudTextField @bind-Value=@_passedInAddress.Address 
                                 Label="Patient Address"  
                             Variant="Variant.Text" />
                         </MudItem>
@@ -29,7 +29,7 @@
                         <MudItem xs="12" sm="6" md="4">
                             <MudSelect T="string" Label="Select patient atoll" @bind-Value="SelectedAtoll">
 
-                                <Iterations Items=DistinctAtolls Context = "atoll">
+                                <Iterations Items=_distinctAtolls Context = "atoll">
                                     <MudSelectItem Value="@(atoll)" />
                                 </Iterations>
 
@@ -38,9 +38,9 @@
 
                         @*Island*@
                         <MudItem xs="12" sm="6" md="4">
-                            <MudSelect T="string" Label="Select patient island" @bind-Value="_selectedIsland">
+                            <MudSelect T="string" Label="Select patient island" @bind-Value=@_passedInAddress.Island>
 
-                                <Iterations Items=FilteredIslands Context = "island">
+                                <Iterations Items=_filteredIslands Context = "island">
                                     <MudSelectItem Value="@(island)" />
                                 </Iterations>
 
@@ -51,8 +51,9 @@
                 </MudForm>
         </MudCardContent>
         <MudCardActions>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" 
-                Class="ml-auto">Save</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ApplyAddressChanges" 
+                Disabled="@(!_success)" 
+                Class="ml-auto">Apply</MudButton>
         </MudCardActions>
     </MudCard>
 

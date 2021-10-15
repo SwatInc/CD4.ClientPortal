@@ -2,9 +2,19 @@
     <MudGrid>
         <MudItem xs="12" sm="6" md="4">
             <MudField Label="Patient Address" Variant="Variant.Outlined">
-                @Address
-                @String.Concat(new string[]{LoggedInSiteAddress.Atoll,". ", LoggedInSiteAddress.Island})
+                @DisplaySiteAddress.Address
+                @String.Concat(new string[]{DisplaySiteAddress.Atoll,". ", DisplaySiteAddress.Island})
             </MudField>
         </MudItem>
     </MudGrid>
+
+    <MudGrid>
+        @*Edit Address button*@
+        <MudButton  Class="ma-4"
+                    Variant="Variant.Filled"
+                    Color="Color.Primary" OnClick="RequestAddressChange">
+                    Edit Address
+        </MudButton>
+    </MudGrid>
+
 </MudContainer>

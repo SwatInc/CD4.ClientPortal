@@ -94,23 +94,12 @@
                             Upload Passport / National ID / Work Visa
                         </MudButton>
 
-                        <Condition Evaluation=@_isDisplayAddressVisible >
-                            <Match>
-                                @*Edit Address button*@
-                                <MudButton  Class="ma-4"
-                                           Variant="Variant.Filled"
-                                           Color="Color.Primary" OnClick="EnableAddressEditing">
-                                           Edit Address
-                                 </MudButton>
-                            </Match>
-                        </Condition>
-
                     </MudGrid>
 
                 </MudForm>
         </MudCardContent>
         <MudCardActions>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" 
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled=@_canSavePatient 
                 Class="ml-auto">Save</MudButton>
         </MudCardActions>
     </MudCard>
@@ -118,12 +107,12 @@
     <Condition Evaluation=@_isDisplayAddressVisible>
         <Match>
             <div class="ma-4">
-                <AddressDisplay/>
+                <AddressDisplay PassedInAddress=_addressPassedIn OnAddressChangeRequested="OnAddressChangeRequested"/>
             </div>
         </Match>
         <NotMatch>
             <div class="ma-4">
-                <AddAddress/>
+                <AddAddress PassedInAddress=@_addressPassedIn OnAddressChanged=OnAddressChanged/>
             </div>
         </NotMatch>
     </Condition>

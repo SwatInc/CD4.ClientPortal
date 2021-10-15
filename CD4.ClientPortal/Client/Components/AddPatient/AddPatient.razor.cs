@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using CD4.ClientPortal.Shared.Models;
+using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
 {
     public partial class AddPatient
     {
+        #region Fileds
         private MudChip _mudchip;
         private string _nidPp;
         private string _fullname;
@@ -17,18 +19,26 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
         private DateTime? _sampleCollectedDate;
         private DateTime? _sampleCollectedTime;
         private bool _isDisplayAddressVisible;
+        private AddressModel _addressPassedIn;
+        private string[] errors = Array.Empty<string>();
+        private IList<IBrowserFile> files = new List<IBrowserFile>();
+        private bool _canSavePatient { get { return _success == false || _isDisplayAddressVisible == false; } }
         bool _success;
+        private DateTime? _birthdate;
         MudForm _form;
+        #endregion
 
+        #region Constructor
         public AddPatient()
         {
             _isDisplayAddressVisible = true;
         }
 
-        private DateTime? _birthdate;
+        #endregion
 
-        bool mandatory = true;
-        MudChip SelectedPatientType
+        #region Full Properties
+        private bool mandatory = true;
+        private MudChip SelectedPatientType
         {
             get { return _mudchip; }
             set
@@ -37,22 +47,30 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
                 Console.WriteLine($"selected chip: {_mudchip.Text}");
             }
         }
-        public string SelectedGender
+        private string SelectedGender
         {
             get { return _selectedGender; }
             set { _selectedGender = value; Console.WriteLine($"Gender: {_selectedGender}"); }
         }
-
-        public string PatientNationality
+        private string PatientNationality
         {
             get { return _patientNationality; }
             set { _patientNationality = value; }
         }
-
-        public DateTime? Birthdate
+        private DateTime? Birthdate
         {
             get { return _birthdate; }
             set { _birthdate = value; Console.WriteLine($"Birthdate: {_birthdate}"); }
+        }
+        private string NidPp
+        {
+            get { return _nidPp; }
+            set { _nidPp = value; Console.WriteLine($"NidPp: {_nidPp}"); }
+        }
+        private string Fullname
+        {
+            get { return _fullname; }
+            set { _fullname = value; Console.WriteLine($"Fullname: {_fullname}"); }
         }
 
         #region sample collected date and time
@@ -72,20 +90,9 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
 
         #endregion
 
-        public string NidPp
-        {
-            get { return _nidPp; }
-            set { _nidPp = value; Console.WriteLine($"NidPp: {_nidPp}"); }
-        }
+        #endregion
 
-        public string Fullname
-        {
-            get { return _fullname; }
-            set { _fullname = value; Console.WriteLine($"Fullname: {_fullname}"); }
-        }
-
-        string[] errors = Array.Empty<string>();
-
+        #region Methods
         private async Task<IEnumerable<string>> NationalityLookup(string value)
         {
             //get countries data during initialization
@@ -95,8 +102,6 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
             return nationalities.FindAll((x) => x.ToLower().Contains(value.Trim().ToLower()))
                 .ToList();
         }
-
-        IList<IBrowserFile> files = new List<IBrowserFile>();
         private void UploadFiles(InputFileChangeEventArgs e)
         {
             foreach (var file in e.GetMultipleFiles())
@@ -106,10 +111,21 @@ namespace CD4.ClientPortal.Client.Components.AddPatient
             Console.WriteLine($"Number of files: {files.Count}");
             //TODO upload the files to the server
         }
-        private void EnableAddressEditing()
+        private void OnAddressChangeRequested(AddressModel addressCommunicationModel)
         {
+            _addressPassedIn = null;
+            _addressPassedIn = addressCommunicationModel;
             _isDisplayAddressVisible = false;
+
         }
+        private void OnAddressChanged(AddressModel address)
+        {
+            _addressPassedIn = address;
+            _isDisplayAddressVisible = true;
+        }
+
+        #endregion
+
     }
 
 }
